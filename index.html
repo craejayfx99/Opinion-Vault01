@@ -1,0 +1,877 @@
+DOCTYPE 
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Opinion Vault</title>
+  <style>
+    :root {
+      --bg-color: #0d131d;
+      --card-bg: #1a2332;
+      --card-inner: #121924;
+      --accent-blue: #2563eb;
+      --accent-hover: #1d4ed8;
+      --text-main: #ffffff;
+      --text-muted: #94a3b8;
+      --badge-active: #2563eb;
+      --badge-inactive: #64748b;
+      --badge-country: #dc2626;
+      --badge-device: #9333ea;
+      --badge-category: #a855f7;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+    body { background-color: var(--bg-color); color: var(--text-main); min-height: 100vh; padding-bottom: 50px; }
+
+    /* Header & Branding */
+    header { background-color: var(--card-bg); padding: 20px; border-bottom: 1px solid #2d3748; display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; width: 100%; }
+    .brand-container { display: flex; align-items: center; gap: 12px; }
+    .brand-logo { max-height: 40px; border-radius: 6px; }
+    .brand-title { color: #fff; font-size: 1.6rem; font-weight: bold; letter-spacing: 0.5px; }
+    .header-actions { display: flex; gap: 10px; align-items: center; }
+
+    .btn-admin, .btn-tricked { background: var(--card-inner); border: 1px solid #374151; color: #fff; padding: 8px 14px; border-radius: 6px; cursor: pointer; font-size: 0.9rem; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 6px; transition: 0.2s; }
+    .btn-admin:hover, .btn-tricked:hover { background: #2d3748; }
+    .btn-tricked { background: #7c3aed; border-color: #6d28d9; }
+    .btn-tricked:hover { background: #6d28d9; }
+
+    /* Email Signup / Gate Modal */
+    .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(13, 19, 29, 0.95); display: flex; justify-content: center; align-items: center; z-index: 1000; }
+    .modal-box { background: var(--card-bg); padding: 32px; border-radius: 12px; max-width: 420px; width: 90%; text-align: center; border: 1px solid #2d3748; box-shadow: 0 10px 25px rgba(0,0,0,0.6); }
+    .modal-box h2 { font-size: 1.5rem; margin-bottom: 10px; }
+    .modal-box p { color: var(--text-muted); margin-bottom: 20px; font-size: 0.95rem; line-height: 1.4; }
+    .modal-box input { width: 100%; padding: 12px; border-radius: 6px; border: 1px solid #374151; background: var(--card-inner); color: #fff; margin-bottom: 15px; font-size: 1rem; }
+    .modal-box button { width: 100%; padding: 12px; border: none; background: var(--accent-blue); color: #fff; font-weight: bold; border-radius: 6px; cursor: pointer; font-size: 1rem; }
+    .modal-box button:hover { background: var(--accent-hover); }
+
+    /* Controls & Filters */
+    .controls-container { max-width: 1100px; margin: 25px auto 15px; padding: 0 15px; }
+    .search-bar { width: 100%; padding: 12px 16px; border-radius: 8px; border: 1px solid #2d3748; background: var(--card-bg); color: #fff; margin-bottom: 15px; font-size: 1rem; }
+    .filters { display: flex; gap: 10px; flex-wrap: wrap; }
+    .filter-select { background: var(--card-bg); color: #fff; border: 1px solid #2d3748; padding: 10px 16px; border-radius: 8px; font-size: 0.95rem; cursor: pointer; flex: 1; min-width: 140px; }
+
+    /* Offers Grid & Cards */
+    .offers-grid { max-width: 1100px; margin: 0 auto; padding: 0 15px; display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px; }
+    .offer-card { background: var(--card-bg); border-radius: 12px; overflow: hidden; border: 1px solid #2d3748; display: flex; flex-direction: column; position: relative; }
+    .card-preview { background: #ffffff; padding: 15px; text-align: center; position: relative; min-height: 140px; display: flex; align-items: center; justify-content: center; }
+    .card-preview img { max-width: 100%; max-height: 120px; object-fit: contain; }
+    .country-tag-overlay { position: absolute; top: 10px; left: 10px; background: #f3f4f6; color: #111827; padding: 4px 8px; border-radius: 4px; font-weight: bold; font-size: 0.8rem; border: 1px solid #e5e7eb; }
+
+    .card-body { padding: 20px; display: flex; flex-direction: column; flex-grow: 1; gap: 12px; }
+    .offer-title { font-size: 1.2rem; font-weight: bold; line-height: 1.35; color: #ffffff; }
+    .offer-desc { font-size: 0.88rem; color: var(--text-muted); line-height: 1.3; }
+    
+    .status-badge { display: inline-block; padding: 3px 10px; border-radius: 4px; font-size: 0.8rem; font-weight: bold; width: fit-content; }
+    .status-active { background: var(--badge-active); color: #fff; }
+    .status-inactive { background: var(--badge-inactive); color: #fff; }
+    
+    .meta-group { display: flex; flex-direction: column; gap: 4px; }
+    .meta-label { color: var(--text-muted); font-size: 0.85rem; }
+    .meta-value { font-size: 0.95rem; color: #fff; font-weight: 500; }
+    
+    .pill { display: inline-block; padding: 4px 10px; border-radius: 6px; font-size: 0.8rem; font-weight: 600; color: #fff; width: fit-content; }
+    .pill-country { background: var(--badge-country); }
+    .pill-device { background: var(--badge-device); }
+    .pill-category { background: var(--badge-category); }
+
+    .btn-open { background: var(--accent-blue); color: #fff; text-decoration: none; text-align: center; padding: 12px; border-radius: 8px; font-weight: bold; display: flex; justify-content: center; align-items: center; gap: 8px; margin-top: auto; transition: background 0.2s; }
+    .btn-open:hover { background: var(--accent-hover); }
+
+    /* Feedbacks Section */
+    .feedback-section { margin-top: 5px; background: var(--card-inner); padding: 12px; border-radius: 8px; border: 1px solid #2d3748; }
+    .feedback-section h4 { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 8px; font-weight: 600; }
+    .feedback-list { display: flex; flex-direction: column; gap: 6px; font-size: 0.82rem; color: #cbd5e1; }
+    .feedback-item { background: rgba(255,255,255,0.05); padding: 6px 10px; border-radius: 4px; border-left: 3px solid var(--accent-blue); }
+
+    /* Admin Dashboard Panel Overlay */
+    .admin-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(13, 19, 29, 0.98); z-index: 2000; display: flex; }
+    .admin-sidebar { width: 260px; background: var(--card-bg); border-right: 1px solid #2d3748; padding: 20px 0; display: flex; flex-direction: column; }
+    .admin-sidebar h3 { padding: 0 20px 20px; font-size: 1.2rem; border-bottom: 1px solid #2d3748; color: #fff; }
+    .admin-nav-btn { background: none; border: none; color: var(--text-muted); padding: 14px 20px; text-align: left; cursor: pointer; font-size: 0.95rem; width: 100%; border-left: 3px solid transparent; transition: 0.2s; }
+    .admin-nav-btn:hover, .admin-nav-btn.active { color: #fff; background: var(--card-inner); border-left-color: var(--accent-blue); }
+    
+    .admin-content { flex: 1; padding: 30px; overflow-y: auto; }
+    .admin-tab { display: none; }
+    .admin-tab.active { display: block; }
+    
+    .form-group { margin-bottom: 18px; }
+    .form-group label { display: block; margin-bottom: 6px; font-size: 0.9rem; color: var(--text-muted); }
+    .form-control { width: 100%; padding: 10px 12px; background: var(--card-inner); border: 1px solid #374151; color: #fff; border-radius: 6px; font-size: 0.95rem; }
+    .form-control:focus { outline: none; border-color: var(--accent-blue); }
+    
+    .table-container { overflow-x: auto; margin-top: 15px; }
+    table { width: 100%; border-collapse: collapse; text-align: left; font-size: 0.9rem; }
+    th, td { padding: 12px 15px; border-bottom: 1px solid #2d3748; }
+    th { background: var(--card-bg); color: var(--text-muted); font-weight: 600; }
+    tr:hover { background: rgba(255,255,255,0.02); }
+
+    .btn-action { padding: 6px 12px; border-radius: 4px; border: none; cursor: pointer; font-size: 0.8rem; font-weight: bold; margin-right: 5px; }
+    .btn-edit { background: #0284c7; color: #fff; }
+    .btn-delete { background: #dc2626; color: #fff; }
+    .btn-toggle { background: #059669; color: #fff; }
+    .btn-save { background: var(--accent-blue); color: #fff; padding: 10px 20px; border-radius: 6px; border: none; cursor: pointer; font-weight: bold; font-size: 0.95rem; }
+
+    /* Footer */
+    footer { max-width: 1100px; margin: 40px auto 0; padding: 20px 15px; border-top: 1px solid #2d3748; text-align: center; color: var(--text-muted); font-size: 0.85rem; line-height: 1.6; }
+    footer a { color: var(--accent-blue); text-decoration: none; }
+
+    .hidden { display: none !important; }
+
+    @media (max-width: 768px) {
+      .admin-overlay { flex-direction: column; }
+      .admin-sidebar { width: 100%; height: auto; border-right: none; border-bottom: 1px solid #2d3748; }
+      .offers-grid { grid-template-columns: 1fr; }
+      header { flex-direction: column; gap: 15px; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Visitor Access Gate Modal -->
+  <div id="accessModal" class="modal-overlay">
+    <div class="modal-box">
+      <h2 id="modalBrandTitle">Opinion Vault</h2>
+      <p>Enter your email address to unlock and access all available survey opportunities and rewards.</p>
+      <input type="email" id="userEmail" placeholder="Enter your email address" required />
+      <button onclick="unlockVault()">Access Offers</button>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header>
+    <div class="brand-container">
+      <img id="siteLogoImg" class="brand-logo hidden" src="" alt="Logo" />
+      <div class="brand-title" id="siteBrandTitle">Opinion Vault</div>
+    </div>
+    <div class="header-actions">
+      <a id="trickedGameBtn" href="#" target="_blank" class="btn-tricked hidden">🎮 Play Tricked Game</a>
+      <button class="btn-admin" onclick="openAdminModal()">🔑 Admin Dashboard</button>
+    </div>
+  </header>
+
+  <!-- Filter & Search Controls -->
+  <div class="controls-container">
+    <input type="text" class="search-bar" id="searchInput" placeholder="Search survey opportunities..." onkeyup="filterOffers()" />
+    <div class="filters">
+      <select class="filter-select" id="countryFilter" onchange="filterOffers()">
+        <option value="All">All Countries</option>
+        <option value="Germany">Germany</option>
+        <option value="Nigeria">Nigeria</option>
+        <option value="United States">United States</option>
+        <option value="United Kingdom">United Kingdom</option>
+      </select>
+      <select class="filter-select" id="deviceFilter" onchange="filterOffers()">
+        <option value="All">All Devices</option>
+        <option value="Android">Android</option>
+        <option value="iOS">iOS</option>
+        <option value="Desktop">Desktop</option>
+      </select>
+      <select class="filter-select" id="categoryFilter" onchange="filterOffers()">
+        <option value="All">All Categories</option>
+        <option value="Games">Games</option>
+        <option value="Surveys">Surveys</option>
+        <option value="Mobile Apps">Mobile Apps</option>
+        <option value="Downloads">Downloads</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Offers Grid Container -->
+  <div class="offers-grid" id="offersGrid"></div>
+
+  <!-- Footer -->
+  <footer>
+    <p id="siteAboutText">Opinion Vault connecting users with verified surveys, tasks, and reward opportunities.</p>
+    <p style="margin-top: 10px;" id="siteFooterText">&copy; 2026 Opinion Vault. All rights reserved.</p>
+    <div style="margin-top: 8px;">
+      <a href="#" onclick="alert(siteSettings.privacyPolicy)">Privacy Policy</a> | 
+      <a href="#" onclick="alert(siteSettings.termsConditions)">Terms & Conditions</a> | 
+      <a href="#" onclick="alert('Contact: ' + siteSettings.contactInfo)">Contact Support</a>
+    </div>
+  </footer>
+
+  <!-- Admin Dashboard Modal -->
+  <div id="adminModal" class="admin-overlay hidden">
+    <div class="admin-sidebar">
+      <h3>Admin Dashboard</h3>
+      <button class="admin-nav-btn active" onclick="switchTab('tab-dash')">Dashboard</button>
+      <button class="admin-nav-btn" onclick="switchTab('tab-offers')">Offer Management</button>
+      <button class="admin-nav-btn" onclick="switchTab('tab-add')">Add New Offer</button>
+      <button class="admin-nav-btn" onclick="switchTab('tab-tricked')">Tricked Game Link</button>
+      <button class="admin-nav-btn" onclick="switchTab('tab-settings')">Site Settings</button>
+      <button class="admin-nav-btn" onclick="switchTab('tab-contact')">Contact Information</button>
+      <button class="admin-nav-btn" onclick="switchTab('tab-legal')">Legal Information</button>
+      <button class="admin-nav-btn" onclick="switchTab('tab-security')">Security Settings</button>
+      <button class="admin-nav-btn" style="margin-top: auto; color: #ef4444;" onclick="closeAdminModal()">Logout / Exit</button>
+    </div>
+
+    <div class="admin-content">
+      <!-- Tab: Dashboard -->
+      <div id="tab-dash" class="admin-tab active">
+        <h2>System Overview</h2>
+        <div style="display: flex; gap: 20px; margin-top: 20px; flex-wrap: wrap;">
+          <div style="background: var(--card-bg); padding: 20px; border-radius: 8px; flex: 1; border: 1px solid #2d3748; min-width: 180px;">
+            <div style="color: var(--text-muted); font-size: 0.9rem;">Total Offers</div>
+            <div style="font-size: 2rem; font-weight: bold; margin-top: 5px;" id="dashTotalOffers">0</div>
+          </div>
+          <div style="background: var(--card-bg); padding: 20px; border-radius: 8px; flex: 1; border: 1px solid #2d3748; min-width: 180px;">
+            <div style="color: var(--text-muted); font-size: 0.9rem;">Active Offers</div>
+            <div style="font-size: 2rem; font-weight: bold; color: #10b981; margin-top: 5px;" id="dashActiveOffers">0</div>
+          </div>
+          <div style="background: var(--card-bg); padding: 20px; border-radius: 8px; flex: 1; border: 1px solid #2d3748; min-width: 180px;">
+            <div style="color: var(--text-muted); font-size: 0.9rem;">Inactive Offers</div>
+            <div style="font-size: 2rem; font-weight: bold; color: #ef4444; margin-top: 5px;" id="dashInactiveOffers">0</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab: Offer Management -->
+      <div id="tab-offers" class="admin-tab">
+        <h2>Manage Survey Offers</h2>
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Title</th>
+                <th>Country</th>
+                <th>Device</th>
+                <th>Payout/Points</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="adminOffersTable"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Tab: Add Offer -->
+      <div id="tab-add" class="admin-tab">
+        <h2 id="addOfferFormTitle">Add New Offer</h2>
+        <form id="offerForm" style="max-width: 600px; margin-top: 15px;" onsubmit="saveOfferForm(event)">
+          <input type="hidden" id="editOfferId" value="" />
+          <div class="form-group">
+            <label>Offer Name / Title</label>
+            <input type="text" id="formTitle" class="form-control" required />
+          </div>
+          <div class="form-group">
+            <label>Description</label>
+            <input type="text" id="formDesc" class="form-control" required />
+          </div>
+          <div class="form-group">
+            <label>Tracking URL</label>
+            <input type="url" id="formLink" class="form-control" required />
+          </div>
+          <div class="form-group">
+            <label>Payout / Points</label>
+            <input type="text" id="formPoints" class="form-control" value="1500 points" required />
+          </div>
+          <div style="display: flex; gap: 15px;">
+            <div class="form-group" style="flex:1;">
+              <label>Country</label>
+              <input type="text" id="formCountry" class="form-control" value="Germany" required />
+            </div>
+            <div class="form-group" style="flex:1;">
+              <label>Device</label>
+              <select id="formDevice" class="form-control">
+                <option value="Android">Android</option>
+                <option value="iOS">iOS</option>
+                <option value="Desktop">Desktop</option>
+              </select>
+            </div>
+            <div class="form-group" style="flex:1;">
+              <label>Category</label>
+              <select id="formCategory" class="form-control">
+                <option value="Games">Games</option>
+                <option value="Surveys">Surveys</option>
+                <option value="Mobile Apps">Mobile Apps</option>
+                <option value="Downloads">Downloads</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Cover Image URL</label>
+            <input type="text" id="formImg" class="form-control" value="https://via.placeholder.com/300x120/ffffff/000000?text=Offer+Preview" />
+          </div>
+          <button type="submit" class="btn-save">Save Offer</button>
+        </form>
+      </div>
+
+      <!-- Tab: Tricked Game Link -->
+      <div id="tab-tricked" class="admin-tab">
+        <h2>Tricked Game Link Configuration</h2>
+        <p style="color: var(--text-muted); margin-bottom: 20px;">Enter your published Tricked game URL below to make the game access button visible on the main landing page.</p>
+        <div style="max-width: 500px;">
+          <div class="form-group">
+            <label>Tricked Game URL</label>
+            <input type="url" id="trickedUrlInput" class="form-control" placeholder="https://your-tricked-game-url.com" />
+          </div>
+          <button class="btn-save" onclick="saveTrickedUrl()">Save Tricked Link</button>
+        </div>
+      </div>
+
+      <!-- Tab: Site Settings -->
+      <div id="tab-settings" class="admin-tab">
+        <h2>Site Branding & Settings</h2>
+        <div style="max-width: 500px; margin-top: 15px;">
+          <div class="form-group">
+            <label>Brand Name</label>
+            <input type="text" id="settingBrandName" class="form-control" />
+          </div>
+          <div class="form-group">
+            <label>Logo Image URL</label>
+            <input type="text" id="settingLogoUrl" class="form-control" placeholder="https://example.com/logo.png" />
+          </div>
+          <div class="form-group">
+            <label>About Text</label>
+            <textarea id="settingAboutText" class="form-control" rows="3"></textarea>
+          </div>
+          <div class="form-group">
+            <label>Footer Text</label>
+            <input type="text" id="settingFooterText" class="form-control" />
+          </div>
+          <button class="btn-save" onclick="saveSiteSettings()">Save Site Settings</button>
+        </div>
+      </div>
+
+      <!-- Tab: Contact Information -->
+      <div id="tab-contact" class="admin-tab">
+        <h2>Contact Information</h2>
+        <div style="max-width: 500px; margin-top: 15px;">
+          <div class="form-group">
+            <label>Support Email / Info</label>
+            <input type="text" id="settingContactInfo" class="form-control" />
+          </div>
+          <button class="btn-save" onclick="saveContactInfo()">Save Contact Info</button>
+        </div>
+      </div>
+
+      <!-- Tab: Legal Information -->
+      <div id="tab-legal" class="admin-tab">
+        <h2>Legal Information</h2>
+        <div style="max-width: 600px; margin-top: 15px;">
+          <div class="form-group">
+            <label>Privacy Policy Text</label>
+            <textarea id="settingPrivacyPolicy" class="form-control" rows="4"></textarea>
+          </div>
+          <div class="form-group">
+            <label>Terms & Conditions Text</label>
+            <textarea id="settingTerms" class="form-control" rows="4"></textarea>
+          </div>
+          <button class="btn-save" onclick="saveLegalInfo()">Save Legal Information</button>
+        </div>
+      </div>
+
+      <!-- Tab: Security Settings -->
+      <div id="tab-security" class="admin-tab">
+        <h2>Security Settings</h2>
+        <div style="max-width: 400px; margin-top: 15px;">
+          <div class="form-group">
+            <label>Admin Password</label>
+            <input type="password" id="settingAdminPassword" class="form-control" />
+          </div>
+          <button class="btn-save" onclick="saveSecuritySettings()">Update Password</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    // Initial 12 Exact Offers
+    const initialOffers = [
+      {
+        id: 1,
+        title: "Sammle jetzt Prämien bei Cash'emAll!",
+        desc: "Jetzt herunterladen und loslegen.",
+        link: "https://singingfiles.com/show.php?l=0&u=2543397&id=74404",
+        points: "1500 points",
+        country: "Germany",
+        device: "Android",
+        category: "Games",
+        status: "Active",
+        img: "https://via.placeholder.com/300x120/ffffff/000000?text=Cash'em+All",
+        feedbacks: ["Fast payout after reaching level 5!", "Works great on Android devices."]
+      },
+      {
+        id: 2,
+        title: "Hol dir drei Apps bei Just Games!",
+        desc: "Jetzt herunterladen und loslegen.",
+        link: "https://singingfiles.com/show.php?l=0&u=2543397&id=73895",
+        points: "2000 points",
+        country: "Germany",
+        device: "Android",
+        category: "Games",
+        status: "Active",
+        img: "https://via.placeholder.com/300x120/ffffff/000000?text=Just+Games",
+        feedbacks: ["Easy app installation setup.", "Credited points within 10 minutes."]
+      },
+      {
+        id: 3,
+        title: "Start Using Vivago.ai: AI Image & Video!",
+        desc: "Download now to get started",
+        link: "https://singingfiles.com/show.php?l=0&u=2543397&id=75301",
+        points: "1200 points",
+        country: "Nigeria",
+        device: "Android",
+        category: "Mobile Apps",
+        status: "Active",
+        img: "https://via.placeholder.com/300x120/ffffff/000000?text=Vivago.ai",
+        feedbacks: ["Verified task completion.", "Smooth mobile interface."]
+      },
+      {
+        id: 4,
+        title: "Get Your Bonus on Tap Rewards!",
+        desc: "Enter Your information for a Chance to win",
+        link: "https://singingfiles.com/show.php?l=0&u=2543397&id=73377",
+        points: "1000 points",
+        country: "United States",
+        device: "Desktop",
+        category: "Surveys",
+        status: "Active",
+        img: "https://via.placeholder.com/300x120/ffffff/000000?text=Tap+Rewards",
+        feedbacks: []
+      },
+      {
+        id: 5,
+        title: "Get $100 Ulta Gift Card",
+        desc: "Enter your information now for a Chance to win",
+        link: "https://singingfiles.com/show.php?l=0&u=2543397&id=74437",
+        points: "1800 points",
+        country: "United States",
+        device: "Desktop",
+        category: "Surveys",
+        status: "Active",
+        img: "https://via.placeholder.com/300x120/ffffff/000000?text=Ulta+Gift+Card",
+        feedbacks: []
+      },
+      {
+        id: 6,
+        title: "Get Rewarded After You Spin the Wheel",
+        desc: "Enter your information now for a Chance",
+        link: "https://singingfiles.com/show.php?l=0&u=2543397&id=73393",
+        points: "1400 points",
+        country: "United States",
+        device: "Desktop",
+        category: "Surveys",
+        status: "Active",
+        img: "https://via.placeholder.com/300x120/ffffff/000000?text=Spin+The+Wheel",
+        feedbacks: []
+      },
+      {
+        id: 7,
+        title: "Get $500 to spend on Walmart!",
+        desc: "Enter your information for a Chance to Win",
+        link: "https://singingfiles.com/show.php?l=0&u=2543397&id=74764",
+        points: "2500 points",
+        country: "United States",
+        device: "Desktop",
+        category: "Surveys",
+        status: "Active",
+        img: "https://via.placeholder.com/300x120/ffffff/000000?text=Walmart+Card",
+        feedbacks: []
+      },
+      {
+        id: 8,
+        title: "Get access to your Bonus Now!",
+        desc: "Enter your information now for a chance to win",
+        link: "https://singingfiles.com/show.php?l=0&u=2543397&id=72069",
+        points: "1100 points",
+        country: "United States",
+        device: "Desktop",
+        category: "Surveys",
+        status: "Active",
+        img: "https://via.placeholder.com/300x120/ffffff/000000?text=Bonus+Access",
+        feedbacks: []
+      },
+      {
+        id: 9,
+        title: "Answer questions for a chance to win £750",
+        desc: "Enter your information now for a chance to win",
+        link: "https://singingfiles.com/show.php?l=0&u=2543397&id=75166",
+        points: "2200 points",
+        country: "United Kingdom",
+        device: "Desktop",
+        category: "Surveys",
+        status: "Active",
+        img: "https://via.placeholder.com/300x120/ffffff/000000?text=UK+Quiz",
+        feedbacks: []
+      },
+      {
+        id: 10,
+        title: "Answer questions for a Chance win $750",
+        desc: "Enter your information now for a chance to win",
+        link: "https://singingfiles.com/show.php?l=0&u=2543397&id=75171",
+        points: "2200 points",
+        country: "United States",
+        device: "Desktop",
+        category: "Surveys",
+        status: "Active",
+        img: "https://via.placeholder.com/300x120/ffffff/000000?text=US+Quiz",
+        feedbacks: []
+      },
+      {
+        id: 11,
+        title: "Get Rewarded After You Spin the Wheel",
+        desc: "Enter your information now for a chance to win",
+        link: "https://singingfiles.com/show.php?l=0&u=2543397&id=73397",
+        points: "1400 points",
+        country: "United States",
+        device: "iOS",
+        category: "Surveys",
+        status: "Active",
+        img: "https://via.placeholder.com/300x120/ffffff/000000?text=Wheel+Rewards",
+        feedbacks: []
+      },
+      {
+        id: 12,
+        title: "Get a Sneakers Gift Card",
+        desc: "Enter your information for a Chance to Win",
+        link: "https://singingfiles.com/show.php?l=0&u=2543397&id=72846",
+        points: "1600 points",
+        country: "United States",
+        device: "Desktop",
+        category: "Surveys",
+        status: "Active",
+        img: "https://via.placeholder.com/300x120/ffffff/000000?text=Sneakers+Card",
+        feedbacks: []
+      }
+    ];
+
+    // Initial Site Settings
+    const defaultSiteSettings = {
+      brandName: "Opinion Vault",
+      logoUrl: "",
+      aboutText: "Opinion Vault connecting users with verified surveys, tasks, and reward opportunities.",
+      footerText: "© 2026 Opinion Vault. All rights reserved.",
+      contactInfo: "support@opinionvault.com",
+      privacyPolicy: "Your privacy is important to us. We collect email addresses only for verification and offer access.",
+      termsConditions: "By using Opinion Vault, you agree to complete tasks honestly and follow all platform guidelines.",
+      adminPassword: "admin123",
+      trickedUrl: ""
+    };
+
+    // Load state from LocalStorage or initialize
+    let offers = JSON.parse(localStorage.getItem('ov_offers')) || initialOffers;
+    let siteSettings = JSON.parse(localStorage.getItem('ov_settings')) || defaultSiteSettings;
+
+    // Save helpers
+    function saveOffersToStorage() { localStorage.setItem('ov_offers', JSON.stringify(offers)); }
+    function saveSettingsToStorage() { localStorage.setItem('ov_settings', JSON.stringify(siteSettings)); }
+
+    // Initialize Page
+    function init() {
+      applySiteSettings();
+      renderPublicOffers();
+    }
+
+    function applySiteSettings() {
+      document.getElementById('siteBrandTitle').innerText = siteSettings.brandName;
+      document.getElementById('modalBrandTitle').innerText = siteSettings.brandName;
+      document.getElementById('siteAboutText').innerText = siteSettings.aboutText;
+      document.getElementById('siteFooterText').innerText = siteSettings.footerText;
+
+      const logoImg = document.getElementById('siteLogoImg');
+      if (siteSettings.logoUrl) {
+        logoImg.src = siteSettings.logoUrl;
+        logoImg.classList.remove('hidden');
+      } else {
+        logoImg.classList.add('hidden');
+      }
+
+      const trickedBtn = document.getElementById('trickedGameBtn');
+      if (siteSettings.trickedUrl) {
+        trickedBtn.href = siteSettings.trickedUrl;
+        trickedBtn.classList.remove('hidden');
+      } else {
+        trickedBtn.classList.add('hidden');
+      }
+    }
+
+    // Access Gate
+    function unlockVault() {
+      const email = document.getElementById('userEmail').value;
+      if (email && email.includes('@')) {
+        document.getElementById('accessModal').style.display = 'none';
+      } else {
+        alert('Please enter a valid email address.');
+      }
+    }
+
+    // Render Public Grid
+    function renderPublicOffers() {
+      const grid = document.getElementById('offersGrid');
+      grid.innerHTML = '';
+
+      offers.forEach((offer) => {
+        if (offer.status !== 'Active') return;
+
+        const feedbackHTML = (offer.feedbacks && offer.feedbacks.length > 0) ? `
+          <div class="feedback-section">
+            <h4>User Feedback</h4>
+            <div class="feedback-list">
+              ${offer.feedbacks.map(f => `<div class="feedback-item">• ${f}</div>`).join('')}
+            </div>
+          </div>
+        ` : '';
+
+        const card = document.createElement('div');
+        card.className = 'offer-card';
+        card.setAttribute('data-country', offer.country);
+        card.setAttribute('data-device', offer.device);
+        card.setAttribute('data-category', offer.category);
+
+        card.innerHTML = `
+          <div class="card-preview">
+            <span class="country-tag-overlay">${offer.country}</span>
+            <img src="${offer.img}" alt="${offer.title}" />
+          </div>
+          <div class="card-body">
+            <div class="offer-title">${offer.title}</div>
+            <div class="offer-desc">${offer.desc}</div>
+            <div><span class="status-badge status-active">${offer.status}</span></div>
+            
+            <div class="meta-group">
+              <span class="meta-label">Reward/Rate</span>
+              <span class="meta-value">${offer.points}</span>
+            </div>
+            
+            <div class="meta-group">
+              <span class="meta-label">Country</span>
+              <span class="pill pill-country">${offer.country}</span>
+            </div>
+            
+            <div class="meta-group">
+              <span class="meta-label">Device</span>
+              <span class="pill pill-device">${offer.device}</span>
+            </div>
+            
+            <div class="meta-group">
+              <span class="meta-label">Category</span>
+              <span class="pill pill-category">${offer.category}</span>
+            </div>
+            
+            ${feedbackHTML}
+
+            <a href="${offer.link}" target="_blank" rel="noopener noreferrer" class="btn-open">
+              <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+              Open offer
+            </a>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    // Filter Logic
+    function filterOffers() {
+      const searchVal = document.getElementById('searchInput').value.toLowerCase();
+      const countryVal = document.getElementById('countryFilter').value;
+      const deviceVal = document.getElementById('deviceFilter').value;
+      const categoryVal = document.getElementById('categoryFilter').value;
+
+      const cards = document.querySelectorAll('.offer-card');
+      cards.forEach(card => {
+        const title = card.querySelector('.offer-title')?.innerText.toLowerCase() || '';
+        const country = card.getAttribute('data-country');
+        const device = card.getAttribute('data-device');
+        const category = card.getAttribute('data-category');
+
+        const matchesSearch = title.includes(searchVal);
+        const matchesCountry = countryVal === 'All' || country === countryVal;
+        const matchesDevice = deviceVal === 'All' || device === deviceVal;
+        const matchesCategory = categoryVal === 'All' || category === categoryVal;
+
+        if (matchesSearch && matchesCountry && matchesDevice && matchesCategory) {
+          card.classList.remove('hidden');
+        } else {
+          card.classList.add('hidden');
+        }
+      });
+    }
+
+    // Admin Functions
+    function openAdminModal() {
+      const pwd = prompt("Enter Admin Password:");
+      if (pwd === siteSettings.adminPassword) {
+        document.getElementById('adminModal').classList.remove('hidden');
+        populateAdminDashboard();
+        populateSettingsInputs();
+      } else {
+        alert("Incorrect password.");
+      }
+    }
+
+    function closeAdminModal() {
+      document.getElementById('adminModal').classList.add('hidden');
+      renderPublicOffers();
+      applySiteSettings();
+    }
+
+    function switchTab(tabId) {
+      document.querySelectorAll('.admin-nav-btn').forEach(btn => btn.classList.remove('active'));
+      document.querySelectorAll('.admin-tab').forEach(tab => tab.classList.remove('active'));
+      
+      event.target.classList.add('active');
+      document.getElementById(tabId).classList.add('active');
+    }
+
+    function populateAdminDashboard() {
+      const activeCount = offers.filter(o => o.status === 'Active').length;
+      document.getElementById('dashTotalOffers').innerText = offers.length;
+      document.getElementById('dashActiveOffers').innerText = activeCount;
+      document.getElementById('dashInactiveOffers').innerText = offers.length - activeCount;
+
+      const tbody = document.getElementById('adminOffersTable');
+      tbody.innerHTML = '';
+      offers.forEach((o) => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${o.id}</td>
+          <td><strong>${o.title}</strong></td>
+          <td>${o.country}</td>
+          <td>${o.device}</td>
+          <td>${o.points}</td>
+          <td><span class="status-badge ${o.status === 'Active' ? 'status-active' : 'status-inactive'}">${o.status}</span></td>
+          <td>
+            <button class="btn-action btn-toggle" onclick="toggleOfferStatus(${o.id})">${o.status === 'Active' ? 'Deactivate' : 'Activate'}</button>
+            <button class="btn-action btn-edit" onclick="editOffer(${o.id})">Edit</button>
+            <button class="btn-action btn-delete" onclick="deleteOffer(${o.id})">Delete</button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function populateSettingsInputs() {
+      document.getElementById('trickedUrlInput').value = siteSettings.trickedUrl || '';
+      document.getElementById('settingBrandName').value = siteSettings.brandName || '';
+      document.getElementById('settingLogoUrl').value = siteSettings.logoUrl || '';
+      document.getElementById('settingAboutText').value = siteSettings.aboutText || '';
+      document.getElementById('settingFooterText').value = siteSettings.footerText || '';
+      document.getElementById('settingContactInfo').value = siteSettings.contactInfo || '';
+      document.getElementById('settingPrivacyPolicy').value = siteSettings.privacyPolicy || '';
+      document.getElementById('settingTerms').value = siteSettings.termsConditions || '';
+      document.getElementById('settingAdminPassword').value = siteSettings.adminPassword || '';
+    }
+
+    function toggleOfferStatus(id) {
+      const offer = offers.find(o => o.id === id);
+      if (offer) {
+        offer.status = offer.status === 'Active' ? 'Inactive' : 'Active';
+        saveOffersToStorage();
+        populateAdminDashboard();
+      }
+    }
+
+    function deleteOffer(id) {
+      if (confirm("Are you sure you want to delete this offer?")) {
+        offers = offers.filter(o => o.id !== id);
+        saveOffersToStorage();
+        populateAdminDashboard();
+      }
+    }
+
+    function editOffer(id) {
+      const offer = offers.find(o => o.id === id);
+      if (offer) {
+        document.getElementById('editOfferId').value = offer.id;
+        document.getElementById('formTitle').value = offer.title;
+        document.getElementById('formDesc').value = offer.desc;
+        document.getElementById('formLink').value = offer.link;
+        document.getElementById('formPoints').value = offer.points;
+        document.getElementById('formCountry').value = offer.country;
+        document.getElementById('formDevice').value = offer.device;
+        document.getElementById('formCategory').value = offer.category;
+        document.getElementById('formImg').value = offer.img;
+
+        document.getElementById('addOfferFormTitle').innerText = "Edit Offer #" + offer.id;
+        switchTab('tab-add');
+      }
+    }
+
+    function saveOfferForm(e) {
+      e.preventDefault();
+      const editId = document.getElementById('editOfferId').value;
+      const title = document.getElementById('formTitle').value;
+      const desc = document.getElementById('formDesc').value;
+      const link = document.getElementById('formLink').value;
+      const points = document.getElementById('formPoints').value;
+      const country = document.getElementById('formCountry').value;
+      const device = document.getElementById('formDevice').value;
+      const category = document.getElementById('formCategory').value;
+      const img = document.getElementById('formImg').value;
+
+      if (editId) {
+        const offer = offers.find(o => o.id == editId);
+        if (offer) {
+          offer.title = title;
+          offer.desc = desc;
+          offer.link = link;
+          offer.points = points;
+          offer.country = country;
+          offer.device = device;
+          offer.category = category;
+          offer.img = img;
+        }
+      } else {
+        const newOffer = {
+          id: Date.now(),
+          title, desc, link, points, country, device, category, img,
+          status: "Active",
+          feedbacks: []
+        };
+        offers.push(newOffer);
+      }
+
+      saveOffersToStorage();
+      alert("Offer saved successfully!");
+      document.getElementById('offerForm').reset();
+      document.getElementById('editOfferId').value = "";
+      document.getElementById('addOfferFormTitle').innerText = "Add New Offer";
+      populateAdminDashboard();
+      switchTab('tab-offers');
+    }
+
+    function saveTrickedUrl() {
+      siteSettings.trickedUrl = document.getElementById('trickedUrlInput').value;
+      saveSettingsToStorage();
+      alert("Tricked Game URL updated!");
+    }
+
+    function saveSiteSettings() {
+      siteSettings.brandName = document.getElementById('settingBrandName').value;
+      siteSettings.logoUrl = document.getElementById('settingLogoUrl').value;
+      siteSettings.aboutText = document.getElementById('settingAboutText').value;
+      siteSettings.footerText = document.getElementById('settingFooterText').value;
+      saveSettingsToStorage();
+      alert("Site settings saved!");
+    }
+
+    function saveContactInfo() {
+      siteSettings.contactInfo = document.getElementById('settingContactInfo').value;
+      saveSettingsToStorage();
+      alert("Contact information saved!");
+    }
+
+    function saveLegalInfo() {
+      siteSettings.privacyPolicy = document.getElementById('settingPrivacyPolicy').value;
+      siteSettings.termsConditions = document.getElementById('settingTerms').value;
+      saveSettingsToStorage();
+      alert("Legal information saved!");
+    }
+
+    function saveSecuritySettings() {
+      const newPwd = document.getElementById('settingAdminPassword').value;
+      if (newPwd) {
+        siteSettings.adminPassword = newPwd;
+        saveSettingsToStorage();
+        alert("Admin password updated!");
+      }
+    }
+
+    init();
+  </script>
+</body>
+</html>
