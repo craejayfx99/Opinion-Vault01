@@ -243,7 +243,15 @@
         function saveEmailsStorage(e) { localStorage.setItem('ov_emails', JSON.stringify(e)); }
 
         let isAdminLoggedIn = false;
-        window.onload = function() { updateGlobalUI(); checkEmailGate(); };
+        window.onload = function() {
+    updateGlobalUI();
+    const savedCountry = localStorage.getItem('ov_selected_country');
+    if (!savedCountry) {
+        showView('view-country-selector');
+    } else {
+        checkEmailGate();
+    }
+};
 
         function checkEmailGate() {
             if (localStorage.getItem('ov_unlocked_email')) { showView('view-user'); renderUserOffers(); }
