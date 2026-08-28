@@ -321,11 +321,21 @@ function selectUserCountry(country) {
         function renderUserOffers() {
             const container = document.getElementById('user-offers-container');
             const search = document.getElementById('search-offers').value.toLowerCase();
-            const offers = getOffers().filter(o => o.status === 'Active');
-            container.innerHTML = '';
-            const filtered = offers.filter(o => o.title.toLowerCase().includes(search) || o.category.toLowerCase().includes(search));
-            if (!filtered.length) { container.innerHTML = `<p style="color:var(--text-muted)">No active offers.</p>`; return; }
-            filtered.forEach(o => {
+const selectedCountry = localStorage.getItem('ov_selected_country') || 'United States';
+    const searchTerm = search ? search.value.toLowerCase().trim() : '';
+    
+    const offers = getOffers().filter(o => {
+        const matchesCountry = o.country === selectedCountry;
+        const matchesSearch = !searchTerm || o.title.toLowerCase().includes(searchTerm) || o.category.toLowerCase().includes(searchTerm);
+        return matchesCountry && matchesSearch;
+    });
+    
+    container.innerHTML = '';
+    if (!offers.length) {
+        container.innerHTML = '<p class="text-gray-400 text-center py-8">No active offers for this region.</p>';
+        return;
+    }
+            offers.forEach(o => {
                 const card = document.createElement('div');
                 card.className = 'offer-card';
                 card.innerHTML = `
