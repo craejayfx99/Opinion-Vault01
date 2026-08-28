@@ -268,7 +268,10 @@
         checkEmailGate();
     }
 };
-
+function selectUserCountry(country) {
+    localStorage.setItem('ov_selected_country', country);
+    checkEmailGate();
+}
         function checkEmailGate() {
             if (localStorage.getItem('ov_unlocked_email')) { showView('view-user'); renderUserOffers(); }
             else { showView('view-email-gate'); }
