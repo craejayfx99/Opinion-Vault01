@@ -325,7 +325,7 @@ const selectedCountry = localStorage.getItem('ov_selected_country') || 'United S
     const searchTerm = search ? search.value.toLowerCase().trim() : '';
     
     const offers = getOffers().filter(o => {
-        const matchesCountry = o.country === selectedCountry;
+        matchesCountry = !selectedCountry || selectedCountry === 'All' || (o.country && o.country.toLowerCase().trim() === selectedCountry.toLowerCase().trim());
         const matchesSearch = !searchTerm || o.title.toLowerCase().includes(searchTerm) || o.category.toLowerCase().includes(searchTerm);
         return matchesCountry && matchesSearch;
     });
