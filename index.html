@@ -92,6 +92,22 @@
         <section id="view-user" class="hidden">
             <div class="toolbar">
                 <div>
+               <div class="country-filter-section" style="margin-bottom: 20px;">
+    <h3 style="color: #ffffff; font-size: 1.25rem; font-weight: 600; margin-bottom: 4px;">Choose Your Country</h3>
+    <p style="color: #94a3b8; font-size: 0.9rem; margin-bottom: 12px;">Select your region to view available offers.</p>
+    <div class="country-pills" style="display: flex; flex-wrap: wrap; gap: 8px;">
+        <button onclick="filterByCountry('All')" class="country-btn" style="background: rgba(255, 255, 255, 0.08); color: #ffffff; border: 1px solid rgba(255, 255, 255, 0.15); padding: 8px 16px; border-radius: 50px; font-size: 0.85srem; font-weight: 500; cursor: pointer; transition: all 0.2s ease;">All</button>
+        <button onclick="filterByCountry('United States')" class="country-btn" style="background: rgba(255, 255, 255, 0.08); color: #ffffff; border: 1px solid rgba(255, 255, 255, 0.15); padding: 8px 16px; border-radius: 50px; font-size: 0.85rem; font-weight: 500; cursor: pointer; transition: all 0.2s ease;">United States</button>
+        <button onclick="filterByCountry('United Kingdom')" class="country-btn" style="background: rgba(255, 255, 255, 0.08); color: #ffffff; border: 1px solid rgba(255, 255, 255, 0.15); padding: 8px 16px; border-radius: 50px; font-size: 0.85rem; font-weight: 500; cursor: pointer; transition: all 0.2s ease;">United Kingdom</button>
+        <button onclick="filterByCountry('Canada')" class="country-btn" style="background: rgba(255, 255, 255, 0.08); color: #ffffff; border: 1px solid rgba(255, 255, 255, 0.15); padding: 8px 16px; border-radius: 50px; font-size: 0.85rem; font-weight: 500; cursor: pointer; transition: all 0.2s ease;">Canada</button>
+        <button onclick="filterByCountry('Australia')" class="country-btn" style="background: rgba(255, 255, 255, 0.08); color: #ffffff; border: 1px solid rgba(255, 255, 255, 0.15); padding: 8px 16px; border-radius: 50px; font-size: 0.85rem; font-weight: 500; cursor: pointer; transition: all 0.2s ease;">Australia</button>
+        <button onclick="filterByCountry('Germany')" class="country-btn" style="background: rgba(255, 255, 255, 0.08); color: #ffffff; border: 1px solid rgba(255, 255, 255, 0.15); padding: 8px 16px; border-radius: 50px; font-size: 0.85rem; font-weight: 500; cursor: pointer; transition: all 0.2s ease;">Germany</button>
+        <button onclick="filterByCountry('France')" class="country-btn" style="background: rgba(255, 255, 255, 0.08); color: #ffffff; border: 1px solid rgba(255, 255, 255, 0.15); padding: 8px 16px; border-radius: 50px; font-size: 0.85rem; font-weight: 500; cursor: pointer; transition: all 0.2s ease;">France</button>
+        <button onclick="filterByCountry('India')" class="country-btn" style="background: rgba(255, 255, 255, 0.08); color: #ffffff; border: 1px solid rgba(255, 255, 255, 0.15); padding: 8px 16px; border-radius: 50px; font-size: 0.85rem; font-weight: 500; cursor: pointer; transition: all 0.2s ease;">India</button>
+        <button onclick="filterByCountry('Nigeria')" class="country-btn" style="background: rgba(255, 255, 255, 0.08); color: #ffffff; border: 1px solid rgba(255, 255, 255, 0.15); padding: 8px 16px; border-radius: 50px; font-size: 0.85rem; font-weight: 500; cursor: pointer; transition: all 0.2s ease;">Nigeria</button>
+        <button onclick="filterByCountry('South Africa')" class="country-btn" style="background: rgba(255, 255, 255, 0.08); color: #ffffff; border: 1px solid rgba(255, 255, 255, 0.15); padding: 8px 16px; border-radius: 50px; font-size: 0.85rem; font-weight: 500; cursor: pointer; transition: all 0.2s ease;">South Africa</button>
+    </div>
+</div>
                     <h2>Available Offers</h2>
                     <p style="color: var(--text-muted); font-size: 0.85rem;">Complete tasks below.</p>
                 </div>
@@ -317,7 +333,14 @@ function selectUserCountry(country) {
             document.getElementById('nav-logout-btn').classList.add('hidden');
             checkEmailGate();
         }
-
+function filterByCountry(country) {
+    if (country === 'All') {
+        localStorage.removeItem('ov_selected_country');
+    } else {
+        localStorage.setItem('ov_selected_country', country);
+    }
+    renderUserOffers();
+}
         function renderUserOffers() {
             const container = document.getElementById('user-offers-container');
             const search = document.getElementById('search-offers').value.toLowerCase();
