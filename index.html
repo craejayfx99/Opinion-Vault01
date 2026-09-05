@@ -364,20 +364,23 @@ function filterByCountry(country) {
             const searchInput = document.getElementById('search-offers');
             const searchTerm = searchInput ? searchInput.value.toLowerCase().trim() : '';
             const selectedCountry = localStorage.getItem('ov_selected_country') || 'All';
+            const standardCountries = ['united states', 'united kingdom', 'canada', 'australia', 'germany', 'france', 'india', 'nigeria', 'south africa'];
             
             const offers = getOffers().filter(o => {
-                const matchesCountry = !selectedCountry || selectedCountry === 'All' || (o.country && o.country.toLowerCase().trim() === selectedCountry.toLowerCase().trim());
+                const offerCountry = (o.country || '').toLowerCase().trim();
+                let matchesCountry = false;
+
+                if (!selectedCountry || selectedCountry === 'All') {
+                    matchesCountry = true;
+                } else if (selectedCountry === 'Other') {
+                    matchesCountry = offerCountry === 'other' || offerCountry === 'global' || offerCountry === 'worldwide' || !standardCountries.includes(offerCountry);
+                } else {
+                    matchesCountry = offerCountry === selectedCountry.toLowerCase().trim();
+                }
+
                 const matchesSearch = !searchTerm || o.title.toLowerCase().includes(searchTerm) || o.category.toLowerCase().includes(searchTerm);
                 return matchesCountry && matchesSearch;
             });
-            
-            container.innerHTML = '';
-            if (!offers.length) {
-                container.innerHTML = '<p class="text-gray-400 text-center py-8">No active offers for this region.</p>';
-                return;
-            }
-            offers.forEach(o => {
-                const card = document.createElement('div');
                 card.className = 'offer-card';
                 card.innerHTML = `
                     <div>
