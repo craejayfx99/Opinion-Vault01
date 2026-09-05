@@ -361,21 +361,21 @@ function filterByCountry(country) {
 }
         function renderUserOffers() {
             const container = document.getElementById('user-offers-container');
-            const search = document.getElementById('search-offers').value.toLowerCase();
-const selectedCountry = localStorage.getItem('ov_selected_country') || 'United States';
-    const searchTerm = search ? search.value.toLowerCase().trim() : '';
-    
-    const offers = getOffers().filter(o => {
-        matchesCountry = !selectedCountry || selectedCountry === 'All' || (o.country && o.country.toLowerCase().trim() === selectedCountry.toLowerCase().trim());
-        const matchesSearch = !searchTerm || o.title.toLowerCase().includes(searchTerm) || o.category.toLowerCase().includes(searchTerm);
-        return matchesCountry && matchesSearch;
-    });
-    
-    container.innerHTML = '';
-    if (!offers.length) {
-        container.innerHTML = '<p class="text-gray-400 text-center py-8">No active offers for this region.</p>';
-        return;
-    }
+            const searchInput = document.getElementById('search-offers');
+            const searchTerm = searchInput ? searchInput.value.toLowerCase().trim() : '';
+            const selectedCountry = localStorage.getItem('ov_selected_country') || 'All';
+            
+            const offers = getOffers().filter(o => {
+                const matchesCountry = !selectedCountry || selectedCountry === 'All' || (o.country && o.country.toLowerCase().trim() === selectedCountry.toLowerCase().trim());
+                const matchesSearch = !searchTerm || o.title.toLowerCase().includes(searchTerm) || o.category.toLowerCase().includes(searchTerm);
+                return matchesCountry && matchesSearch;
+            });
+            
+            container.innerHTML = '';
+            if (!offers.length) {
+                container.innerHTML = '<p class="text-gray-400 text-center py-8">No active offers for this region.</p>';
+                return;
+            }
             offers.forEach(o => {
                 const card = document.createElement('div');
                 card.className = 'offer-card';
