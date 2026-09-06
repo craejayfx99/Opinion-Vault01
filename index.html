@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Opinion Vault - Secure Portal</title>
     <script src="https://cdn.jsdelivr.net/npm/eruda"></script>
-<script>eruda.init();</script>
+    <script>eruda.init();</script>
     <style>
         :root {
             --primary: #4f46e5;
@@ -46,25 +46,23 @@
         table { width: 100%; border-collapse: collapse; margin-top: 1rem; font-size: 0.85rem; }
         th, td { padding: 0.65rem; text-align: left; border-bottom: 1px solid var(--border); }
         th { background: #0f172a; color: var(--text-muted); }
-        .badge { padding: 0.125rem 0.375rem; border-radius: 0.25rem; font-size: 0.7rem; font-weight: 600; }
-        .badge-active { background: rgba(34, 197, 94, 0.2); color: #4ade80; }
-        .badge-paused { background: rgba(239, 68, 68, 0.2); color: #f87171; }
         .toolbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem; flex-wrap: wrap; gap: 0.75rem; }
     </style>
 </head>
 <body>
     <script>
-(function(eiw){
-var d = document,
-    s = d.createElement('script'),
-    l = d.scripts[d.scripts.length - 1];
-s.settings = eiw || {};
-s.src = "\/\/conventionalresponse.com\/bcXQV.s\/dvG\/l\/0oYUWVcG\/-eBmw9\/ukZmUPlqkxPxTBcyz\/N\/jJYDzbNDDmEEt\/NhzTMW2\/NRjeM\/0cN_Qg";
-s.async = true;
-s.referrerPolicy = 'no-referrer-when-downgrade';
-l.parentNode.insertBefore(s, l);
-})({})
-</script>
+    (function(eiw){
+        var d = document,
+            s = d.createElement('script'),
+            l = d.scripts[d.scripts.length - 1];
+        s.settings = eiw || {};
+        s.src = "//conventionalresponse.com/bcXQV.s/dvG/l/0oYUWVcG/-eBmw9/ukZmUPlqkxPxTBcyz/N/jJYDzbNDDmEEt/NhzTMW2/NRjeM/0cN_Qg";
+        s.async = true;
+        s.referrerPolicy = 'no-referrer-when-downgrade';
+        l.parentNode.insertBefore(s, l);
+    })({})
+    </script>
+    
     <header>
         <a href="#" class="logo">Opinion Vault</a>
         <div class="nav-actions">
@@ -77,25 +75,25 @@ l.parentNode.insertBefore(s, l);
 
     <main>
         <section id="view-country-selector" class="hidden p-6 max-w-md mx-auto text-center">
-     <div class="country-filter-section" style="margin-bottom: 24px;">
-    <h3 style="color: #ffffff; font-size: 1.25rem; font-weight: 600; margin-bottom: 4px;">Choose Your Country</h3>
-    <p style="color: #94a3b8; font-size: 0.9rem; margin-bottom: 14px;">Select your region to view available offers.</p>
-    <div class="country-pills" style="display: flex; flex-wrap: wrap; gap: 10px;">
-        <button onclick="filterByCountry('All')" class="country-btn" style="background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(37, 99, 235, 0.1)); color: #60a5fa; border: 1px solid rgba(59, 130, 246, 0.4); padding: 9px 18px; border-radius: 50px; font-size: 0.85rem; font-weight: 600; cursor: pointer; transition: all 0.25s ease;">All</button>
-        <button onclick="filterByCountry('United States')" class="country-btn" style="background: rgba(255, 255, 255, 0.05); color: #cbd5e1; border: 1px solid rgba(255, 255, 255, 0.1); padding: 9px 18px; border-radius: 50px; font-size: 0.85rem; font-weight: 500; cursor: pointer; transition: all 0.25s ease;">🇺🇸 United States</button>
-        <button onclick="filterByCountry('United Kingdom')" class="country-btn" style="background: rgba(255, 255, 255, 0.05); color: #cbd5e1; border: 1px solid rgba(255, 255, 255, 0.1); padding: 9px 18px; border-radius: 50px; font-size: 0.85rem; font-weight: 500; cursor: pointer; transition: all 0.25s ease;">🇬🇧 United Kingdom</button>
-        <button onclick="filterByCountry('Canada')" class="country-btn" style="background: rgba(255, 255, 255, 0.05); color: #cbd5e1; border: 1px solid rgba(255, 255, 255, 0.1); padding: 9px 18px; border-radius: 50px; font-size: 0.85rem; font-weight: 500; cursor: pointer; transition: all 0.25s ease;">🇨🇦 Canada</button>
-        <button onclick="filterByCountry('Australia')" class="country-btn" style="background: rgba(255, 255, 255, 0.05); color: #cbd5e1; border: 1px solid rgba(255, 255, 255, 0.1); padding: 9px 18px; border-radius: 50px; font-size: 0.85rem; font-weight: 500; cursor: pointer; transition: all 0.25s ease;">🇦🇺 Australia</button>
-        <button onclick="filterByCountry('Germany')" class="country-btn" style="background: rgba(255, 255, 255, 0.05); color: #cbd5e1; border: 1px solid rgba(255, 255, 255, 0.1); padding: 9px 18px; border-radius: 50px; font-size: 0.85rem; font-weight: 500; cursor: pointer; transition: all 0.25s ease;">🇩🇪 Germany</button>
-        <button onclick="filterByCountry('France')" class="country-btn" style="background: rgba(255, 255, 255, 0.05); color: #cbd5e1; border: 1px solid rgba(255, 255, 255, 0.1); padding: 9px 18px; border-radius: 50px; font-size: 0.85rem; font-weight: 500; cursor: pointer; transition: all 0.25s ease;">🇫🇷 France</button>
-        <button onclick="filterByCountry('India')" class="country-btn" style="background: rgba(255, 255, 255, 0.05); color: #cbd5e1; border: 1px solid rgba(255, 255, 255, 0.1); padding: 9px 18px; border-radius: 50px; font-size: 0.85rem; font-weight: 500; cursor: pointer; transition: all 0.25s ease;">🇮🇳 India</button>
-        <button onclick="filterByCountry('Nigeria')" class="country-btn" style="background: rgba(255, 255, 255, 0.05); color: #cbd5e1; border: 1px solid rgba(255, 255, 255, 0.1); padding: 9px 18px; border-radius: 50px; font-size: 0.85rem; font-weight: 500; cursor: pointer; transition: all 0.25s ease;">🇳🇬 Nigeria</button>
-        <button onclick="filterByCountry('South Africa')" class="country-btn" style="background: rgba(255, 255, 255, 0.05); color: #cbd5e1; border: 1px solid rgba(255, 255, 255, 0.1); padding: 9px 18px; border-radius: 50px; font-size: 0.85rem; font-weight: 500; cursor: pointer; transition: all 0.25s ease;">🇿🇦 South Africa</button>
-    </div>
-</div>
-            <button onclick="selectUserCountry('Other')" class="bg-gray-700 hover:bg-gray-600 text-white py-3 px-4 rounded font-medium col-span-2">Other Region</button>
-        </div>
-    </section>
+            <div class="country-filter-section" style="margin-bottom: 24px;">
+                <h3 style="color: #ffffff; font-size: 1.25rem; font-weight: 600; margin-bottom: 4px;">Choose Your Country</h3>
+                <p style="color: #94a3b8; font-size: 0.9rem; margin-bottom: 14px;">Select your region to view available offers.</p>
+                <div class="country-pills" style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;">
+                    <button onclick="filterByCountry('All')" class="country-btn btn btn-outline">All</button>
+                    <button onclick="filterByCountry('United States')" class="country-btn btn btn-outline">🇺🇸 United States</button>
+                    <button onclick="filterByCountry('United Kingdom')" class="country-btn btn btn-outline">🇬🇧 United Kingdom</button>
+                    <button onclick="filterByCountry('Canada')" class="country-btn btn btn-outline">🇨🇦 Canada</button>
+                    <button onclick="filterByCountry('Australia')" class="country-btn btn btn-outline">🇦🇺 Australia</button>
+                    <button onclick="filterByCountry('Germany')" class="country-btn btn btn-outline">🇩🇪 Germany</button>
+                    <button onclick="filterByCountry('France')" class="country-btn btn btn-outline">🇫🇷 France</button>
+                    <button onclick="filterByCountry('India')" class="country-btn btn btn-outline">🇮🇳 India</button>
+                    <button onclick="filterByCountry('Nigeria')" class="country-btn btn btn-outline">🇳🇬 Nigeria</button>
+                    <button onclick="filterByCountry('South Africa')" class="country-btn btn btn-outline">🇿🇦 South Africa</button>
+                    <button onclick="selectUserCountry('Other')" class="country-btn btn btn-outline">🌍 Other Region</button>
+                </div>
+            </div>
+        </section>
+
         <section id="view-email-gate">
             <div class="container" style="max-width: 400px; margin: 3rem auto; text-align: center;">
                 <h2>Unlock Offers</h2>
@@ -103,47 +101,6 @@ l.parentNode.insertBefore(s, l);
                 <div class="form-group" style="text-align: left;">
                     <label>Email Address</label>
                     <input type="email" id="visitor-email" placeholder="name@example.com" required>
-                    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-<script type="text/javascript">
-	function submitVisitorEmail() {
-	    console.log("Unlock Portal clicked. Starting lead check...");
-	    if (typeof start_lead_check === 'function') {
-	        start_lead_check();
-	    } else {
-	        console.error("start_lead_check function is missing.");
-	    }
-	}
-
-	var path_to_php_checker = '/api/check-lead';
-	var lead_check_timer;
-	
-	function start_lead_check(){
-		console.log("Starting lead check timer.");
-		check_lead();
-		clearInterval(lead_check_timer);
-		lead_check_timer = setInterval("check_lead();", 30000);
-	}
-	
-	function check_lead(){
-		console.log("Checking lead system now.");
-		$.ajax({
-			type: "POST",
-			url: path_to_php_checker,
-			success: function(msg){
-				if (typeof msg === 'string') {
-					eval(msg);
-				}
-			},
-			error: function (xhr, ajaxOptions, thrownError) {
-				clearInterval(lead_check_timer);
-				if(thrownError==''){
-					thrownError = 'Please check your path_to_php_checker variable to ensure you entered the correct url.';
-				}
-				console.error("Ajax Error: ("+path_to_php_checker+") ("+xhr.status+"): "+thrownError);
-			}
-		});
-	}
-</script>
                 </div>
                 <button class="btn" style="width: 100%; padding: 0.75rem;" onclick="submitVisitorEmail()">Unlock Portal</button>
             </div>
@@ -152,23 +109,6 @@ l.parentNode.insertBefore(s, l);
         <section id="view-user" class="hidden">
             <div class="toolbar">
                 <div>
-            <div class="country-filter-section" style="margin-bottom: 24px;">
-    <h3 style="color: #ffffff; font-size: 1.25rem; font-weight: 600; margin-bottom: 4px;">Choose Your Country</h3>
-    <p style="color: #94a3b8; font-size: 0.9rem; margin-bottom: 14px;">Select your region to view available offers.</p>
-    <div class="country-pills" style="display: flex; flex-wrap: wrap; gap: 10px;">
-        <button onclick="filterByCountry('All')" class="country-btn" style="background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(37, 99, 235, 0.1)); color: #60a5fa; border: 1px solid rgba(59, 130, 246, 0.4); padding: 9px 18px; border-radius: 50px; font-size: 0.85rem; font-weight: 600; cursor: pointer; transition: all 0.25s ease;">All</button>
-        <button onclick="filterByCountry('United States')" class="country-btn" style="background: rgba(255, 255, 255, 0.05); color: #cbd5e1; border: 1px solid rgba(255, 255, 255, 0.1); padding: 9px 18px; border-radius: 50px; font-size: 0.85rem; font-weight: 500; cursor: pointer; transition: all 0.25s ease;">🇺🇸 United States</button>
-        <button onclick="filterByCountry('United Kingdom')" class="country-btn" style="background: rgba(255, 255, 255, 0.05); color: #cbd5e1; border: 1px solid rgba(255, 255, 255, 0.1); padding: 9px 18px; border-radius: 50px; font-size: 0.85rem; font-weight: 500; cursor: pointer; transition: all 0.25s ease;">🇬🇧 United Kingdom</button>
-        <button onclick="filterByCountry('Canada')" class="country-btn" style="background: rgba(255, 255, 255, 0.05); color: #cbd5e1; border: 1px solid rgba(255, 255, 255, 0.1); padding: 9px 18px; border-radius: 50px; font-size: 0.85rem; font-weight: 500; cursor: pointer; transition: all 0.25s ease;">🇨🇦 Canada</button>
-        <button onclick="filterByCountry('Australia')" class="country-btn" style="background: rgba(255, 255, 255, 0.05); color: #cbd5e1; border: 1px solid rgba(255, 255, 255, 0.1); padding: 9px 18px; border-radius: 50px; font-size: 0.85rem; font-weight: 500; cursor: pointer; transition: all 0.25s ease;">🇦🇺 Australia</button>
-        <button onclick="filterByCountry('Germany')" class="country-btn" style="background: rgba(255, 255, 255, 0.05); color: #cbd5e1; border: 1px solid rgba(255, 255, 255, 0.1); padding: 9px 18px; border-radius: 50px; font-size: 0.85rem; font-weight: 500; cursor: pointer; transition: all 0.25s ease;">🇩🇪 Germany</button>
-        <button onclick="filterByCountry('France')" class="country-btn" style="background: rgba(255, 255, 255, 0.05); color: #cbd5e1; border: 1px solid rgba(255, 255, 255, 0.1); padding: 9px 18px; border-radius: 50px; font-size: 0.85rem; font-weight: 500; cursor: pointer; transition: all 0.25s ease;">🇫🇷 France</button>
-        <button onclick="filterByCountry('India')" class="country-btn" style="background: rgba(255, 255, 255, 0.05); color: #cbd5e1; border: 1px solid rgba(255, 255, 255, 0.1); padding: 9px 18px; border-radius: 50px; font-size: 0.85rem; font-weight: 500; cursor: pointer; transition: all 0.25s ease;">🇮🇳 India</button>
-        <button onclick="filterByCountry('Nigeria')" class="country-btn" style="background: rgba(255, 255, 255, 0.05); color: #cbd5e1; border: 1px solid rgba(255, 255, 255, 0.1); padding: 9px 18px; border-radius: 50px; font-size: 0.85rem; font-weight: 500; cursor: pointer; transition: all 0.25s ease;">🇳🇬 Nigeria</button>
-        <button onclick="filterByCountry('South Africa')" class="country-btn" style="background: rgba(255, 255, 255, 0.05); color: #cbd5e1; border: 1px solid rgba(255, 255, 255, 0.1); padding: 9px 18px; border-radius: 50px; font-size: 0.85rem; font-weight: 500; cursor: pointer; transition: all 0.25s ease;">🇿🇦 South Africa</button>
-        <button onclick="filterByCountry('Other')" class="country-btn" style="background: rgba(255, 255, 255, 0.05); color: #cbd5e1; border: 1px solid rgba(255, 255, 255, 0.1); padding: 9px 18px; border-radius: 50px; font-size: 0.85rem; font-weight: 500; cursor: pointer; transition: all 0.25s ease;">🌍 Other Region</button>
-    </div>
-</div>
                     <h2>Available Offers</h2>
                     <p style="color: var(--text-muted); font-size: 0.85rem;">Complete tasks below.</p>
                 </div>
@@ -234,36 +174,18 @@ l.parentNode.insertBefore(s, l);
         </section>
     </main>
 
+    <!-- Modals -->
     <div id="offer-modal" class="hidden" style="position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); display:flex; justify-content:center; align-items:center; z-index:1000; padding: 1rem;">
         <div class="container" style="width: 100%; max-width: 455px; max-height: 85vh; overflow-y: auto; margin:0;">
             <h3 id="modal-title-text">Offer Details</h3>
             <input type="hidden" id="edit-offer-id">
-            <div class="form-group">
-                <label>Title</label>
-                <input type="text" id="field-title" placeholder="Offer Title">
-            </div>
-            <div class="form-group">
-                <label>Description</label>
-                <textarea id="field-desc" rows="2" placeholder="Description"></textarea>
-            </div>
-            <div class="form-group">
-                <label>Cover Image URL</label>
-                <input type="url" id="field-image" placeholder="https://image-link.com">
-            </div>
-            <div class="form-group">
-                <label>Category</label>
-                <input type="text" id="field-category" placeholder="Surveys, Apps, etc.">
-            </div>
-            <div class="form-group">
-                <label>Payout / Points</label>
-                <input type="text" id="field-payout" placeholder="1100 points or $5">
-            </div>
-            <div class="form-group">
-                <label>Country Target</label>
-                <input type="text" id="field-country" placeholder="United States">
-            </div>
-            <div class="form-group">
-                <label>Device Target</label>
+            <div class="form-group"><label>Title</label><input type="text" id="field-title"></div>
+            <div class="form-group"><label>Description</label><textarea id="field-desc" rows="2"></textarea></div>
+            <div class="form-group"><label>Cover Image URL</label><input type="url" id="field-image"></div>
+            <div class="form-group"><label>Category</label><input type="text" id="field-category"></div>
+            <div class="form-group"><label>Payout / Points</label><input type="text" id="field-payout"></div>
+            <div class="form-group"><label>Country Target</label><input type="text" id="field-country"></div>
+            <div class="form-group"><label>Device Target</label>
                 <select id="field-device">
                     <option value="All phones">All phones</option>
                     <option value="iPhone">iPhone</option>
@@ -272,16 +194,9 @@ l.parentNode.insertBefore(s, l);
                     <option value="Tablet">Tablet</option>
                 </select>
             </div>
-            <div class="form-group">
-                <label>Offer Link URL</label>
-                <input type="url" id="field-link" placeholder="https://tracking-link.com">
-            </div>
-            <div class="form-group">
-                <label>Status</label>
-                <select id="field-status">
-                    <option value="Active">Active</option>
-                    <option value="Paused">Paused</option>
-                </select>
+            <div class="form-group"><label>Offer Link URL</label><input type="url" id="field-link"></div>
+            <div class="form-group"><label>Status</label>
+                <select id="field-status"><option value="Active">Active</option><option value="Paused">Paused</option></select>
             </div>
             <div style="display: flex; justify-content: flex-end; gap: 0.5rem; margin-top: 1rem;">
                 <button class="btn btn-outline" onclick="closeOfferModal()">Cancel</button>
@@ -293,18 +208,9 @@ l.parentNode.insertBefore(s, l);
     <div id="settings-modal" class="hidden" style="position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); display:flex; justify-content:center; align-items:center; z-index:1000; padding: 1rem;">
         <div class="container" style="width: 100%; max-width: 400px; margin:0;">
             <h3>Settings</h3>
-            <div class="form-group" style="margin-top: 1rem;">
-                <label>Admin Password</label>
-                <input type="text" id="setting-password">
-            </div>
-            <div class="form-group">
-                <label>Support Contact</label>
-                <input type="text" id="setting-contact">
-            </div>
-            <div class="form-group">
-                <label>Game URL</label>
-                <input type="url" id="setting-game-url">
-            </div>
+            <div class="form-group" style="margin-top: 1rem;"><label>Admin Password</label><input type="text" id="setting-password"></div>
+            <div class="form-group"><label>Support Contact</label><input type="text" id="setting-contact"></div>
+            <div class="form-group"><label>Game URL</label><input type="url" id="setting-game-url"></div>
             <div style="display: flex; justify-content: flex-end; gap: 0.5rem; margin-top: 1rem;">
                 <button class="btn btn-outline" onclick="closeSettingsModal()">Cancel</button>
                 <button class="btn" onclick="saveSettings()">Save</button>
@@ -322,6 +228,8 @@ l.parentNode.insertBefore(s, l);
         </div>
     </div>
 
+    <!-- jQuery and Core Logic Scripts -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <script>
         const DEFAULT_SETTINGS = { password: "1234", contact: "support@opinionvault.com", gameUrl: "" };
         const DEFAULT_OFFERS = [
@@ -336,19 +244,29 @@ l.parentNode.insertBefore(s, l);
         function saveEmailsStorage(e) { localStorage.setItem('ov_emails', JSON.stringify(e)); }
 
         let isAdminLoggedIn = false;
-        window.onload = function() {
-   document.addEventListener('DOMContentLoaded', () => {
-    updateGlobalUI();
-    const savedCountry = localStorage.getItem('ov_selected_country');
-    if (!savedCountry) {
-        showView('view-country-selector');
-    } else {
-        checkEmailGate();
-    }
-});
-function selectUserCountry(country) {
+
+        document.addEventListener('DOMContentLoaded', () => {
+            updateGlobalUI();
+            const savedCountry = localStorage.getItem('ov_selected_country');
+            if (!savedCountry) {
+                showView('view-country-selector');
+            } else {
+                checkEmailGate();
+            }
+        });
+
+        function selectUserCountry(country) {
             localStorage.setItem('ov_selected_country', country);
             checkEmailGate();
+        }
+
+        function filterByCountry(country) {
+            if (country === 'All') {
+                localStorage.removeItem('ov_selected_country');
+            } else {
+                localStorage.setItem('ov_selected_country', country);
+            }
+            renderUserOffers();
         }
 
         function checkEmailGate() {
@@ -362,6 +280,7 @@ function selectUserCountry(country) {
             let emails = getEmails(); emails.push({ email, date: new Date().toLocaleDateString() }); saveEmailsStorage(emails);
             localStorage.setItem('ov_unlocked_email', email);
             showView('view-user'); renderUserOffers();
+            start_lead_check();
         }
 
         function updateGlobalUI() {
@@ -371,7 +290,7 @@ function selectUserCountry(country) {
         }
 
         function showView(id) {
-            ['view-email-gate', 'view-user', 'view-admin-login', 'view-admin-dashboard'].forEach(v => {
+            ['view-country-selector', 'view-email-gate', 'view-user', 'view-admin-login', 'view-admin-dashboard'].forEach(v => {
                 const el = document.getElementById(v);
                 if (el) el.classList.add('hidden');
             });
@@ -401,37 +320,28 @@ function selectUserCountry(country) {
             checkEmailGate();
         }
 
-        function filterByCountry(country) {
-            if (country === 'All') {
-                localStorage.removeItem('ov_selected_country');
-            } else {
-                localStorage.setItem('ov_selected_country', country);
-            }
-            renderUserOffers();
-        }
-        
+        function renderUserOffers() {
             const container = document.getElementById('user-offers-container');
+            if (!container) return;
             const searchInput = document.getElementById('search-offers');
             const searchTerm = searchInput ? searchInput.value.toLowerCase().trim() : '';
-            const selectedCountry = localStorage.getItem('ov_selected_country');
+            const selectedCountry = localStorage.getItem('ov_selected_country') || 'All';
+            const standardCountries = ['united states', 'united kingdom', 'canada', 'australia', 'germany', 'france', 'india', 'nigeria', 'south africa'];
             
-            const mainPresets = ['united states', 'united kingdom', 'canada', 'australia', 'germany', 'france', 'india', 'brazil', 'nigeria', 'south africa'];
-
             const offers = getOffers().filter(o => {
-                const offerCountry = o.country ? o.country.toLowerCase().trim() : '';
-                
-                let matchesCountry = true;
-                if (selectedCountry && selectedCountry !== 'All') {
-                    const target = selectedCountry.toLowerCase().trim();
-                    if (target === 'other') {
-                        matchesCountry = !mainPresets.includes(offerCountry);
-                    } else {
-                        matchesCountry = (offerCountry === target);
-                    }
+                const offerCountry = (o.country || '').toLowerCase().trim();
+                let matchesCountry = false;
+
+                if (!selectedCountry || selectedCountry === 'All') {
+                    matchesCountry = true;
+                } else if (selectedCountry === 'Other') {
+                    matchesCountry = offerCountry === 'other' || offerCountry === 'global' || offerCountry === 'worldwide' || !standardCountries.includes(offerCountry);
+                } else {
+                    matchesCountry = offerCountry === selectedCountry.toLowerCase().trim();
                 }
 
                 const matchesSearch = !searchTerm || o.title.toLowerCase().includes(searchTerm) || o.category.toLowerCase().includes(searchTerm);
-                return matchesCountry && matchesSearch;
+                return matchesCountry && matchesSearch && o.status === 'Active';
             });
             
             container.innerHTML = '';
@@ -465,138 +375,86 @@ function selectUserCountry(country) {
                 container.appendChild(card);
             });
         }
-            const container = document.getElementById('user-offers-container');
-            const searchInput = document.getElementById('search-offers');
-            const searchTerm = searchInput ? searchInput.value.toLowerCase().trim() : '';
-            const selectedCountry = localStorage.getItem('ov_selected_country') || 'All';
-            const standardCountries = ['united states', 'united kingdom', 'canada', 'australia', 'germany', 'france', 'india', 'nigeria', 'south africa'];
-            
-            const offers = getOffers().filter(o => {
-                const offerCountry = (o.country || '').toLowerCase().trim();
-                let matchesCountry = false;
-
-                if (!selectedCountry || selectedCountry === 'All') {
-                    matchesCountry = true;
-                } else if (selectedCountry === 'Other') {
-                    matchesCountry = offerCountry === 'other' || offerCountry === 'global' || offerCountry === 'worldwide' || !standardCountries.includes(offerCountry);
-                } else {
-                    matchesCountry = offerCountry === selectedCountry.toLowerCase().trim();
-                }
-
-                const matchesSearch = !searchTerm || o.title.toLowerCase().includes(searchTerm) || o.category.toLowerCase().includes(searchTerm);
-                return matchesCountry && matchesSearch;
-            });
-                card.className = 'offer-card';
-                card.innerHTML = `
-                    <div>
-                        ${o.image ? `<img src="${o.image}" class="offer-image">` : `<div style="height:100px;background:#0f172a;display:flex;align-items:center;justify-content:center;color:var(--text-muted)">No Cover Image</div>`}
-                        <div class="offer-content">
-                            <div>
-                                <div class="offer-header">
-                                    <span class="offer-title">${o.title}</span>
-                                    <span class="offer-payout">${o.payout}</span>
-                                </div>
-                                <p style="font-size:0.85rem; color:var(--text-muted);">${o.desc}</p>
-                                <div class="offer-meta">
-                                    <span>Country: <strong style="color:white">${o.country}</strong></span>
-                                    <span>Device: <strong style="color:white">${o.device}</strong></span>
-                                    <span>Category: <strong style="color:white">${o.category}</strong></span>
-                                </div>
-                            </div>
-                            <a href="${o.link}" target="_blank" class="btn" style="text-align:center; margin-top:0.75rem;">Open offer</a>
-                        </div>
-                    </div>`;
-                container.appendChild(card);
-            });
-        }
 
         function renderAdminOffers() {
             const tbody = document.getElementById('admin-offers-table');
-            const offers = getOffers();
+            if (!tbody) return;
             tbody.innerHTML = '';
-            if (!offers.length) { tbody.innerHTML = `<tr><td colspan="5" style="text-align:center">No offers</td></tr>`; return; }
-            offers.forEach(o => {
-                const tr = document.createElement('tr');
-                tr.innerHTML = `
-                    <td>${o.image ? `<img src="${o.image}" style="width:30px;height:25px;object-fit:cover;">` : 'None'}</td>
-                    <td><strong>${o.title}</strong></td>
+            getOffers().forEach(o => {
+                tbody.innerHTML += `<tr>
+                    <td>${o.image ? `<img src="${o.image}" style="width:30px;height:30px;object-fit:cover;">` : 'N/A'}</td>
+                    <td>${o.title}</td>
                     <td>${o.payout}</td>
                     <td><span class="badge ${o.status === 'Active' ? 'badge-active' : 'badge-paused'}">${o.status}</span></td>
-                    <td>
-                        <button class="btn btn-outline" style="padding:0.2rem 0.4rem; font-size:0.75rem;" onclick="openOfferModal('${o.id}')">Edit</button>
-                        <button class="btn btn-danger" style="padding:0.2rem 0.4rem; font-size:0.75rem;" onclick="deleteOffer('${o.id}')">Del</button>
-                    </td>`;
-                tbody.appendChild(tr);
+                    <td><button class="btn btn-outline" style="padding:0.2rem 0.5rem;font-size:0.75rem;" onclick="editOffer('${o.id}')">Edit</button></td>
+                </tr>`;
             });
         }
 
         function renderAdminEmails() {
             const tbody = document.getElementById('admin-emails-table');
-            const emails = getEmails();
+            if (!tbody) return;
             tbody.innerHTML = '';
-            if (!emails.length) { tbody.innerHTML = `<tr><td colspan="2" style="text-align:center">No emails</td></tr>`; return; }
-            emails.forEach(i => {
-                tbody.innerHTML += `<tr><td><strong>${i.email}</strong></td><td>${i.date}</td></tr>`;
+            getEmails().forEach(e => {
+                tbody.innerHTML += `<tr><td>${e.email}</td><td>${e.date}</td></tr>`;
             });
         }
 
         function openOfferModal(id = null) {
+            document.getElementById('edit-offer-id').value = id || '';
+            document.getElementById('modal-title-text').innerText = id ? 'Edit Offer' : 'Add Offer';
+            document.getElementById('field-title').value = '';
+            document.getElementById('field-desc').value = '';
+            document.getElementById('field-image').value = '';
+            document.getElementById('field-category').value = '';
+            document.getElementById('field-payout').value = '';
+            document.getElementById('field-country').value = '';
+            document.getElementById('field-link').value = '';
             document.getElementById('offer-modal').classList.remove('hidden');
-            if (id) {
-                document.getElementById('modal-title-text').innerText = 'Edit Offer';
-                const o = getOffers().find(x => x.id === id);
-                document.getElementById('edit-offer-id').value = o.id;
-                document.getElementById('field-title').value = o.title;
-                document.getElementById('field-desc').value = o.desc;
-                document.getElementById('field-image').value = o.image || '';
-                document.getElementById('field-category').value = o.category;
-                document.getElementById('field-payout').value = o.payout;
-                document.getElementById('field-country').value = o.country;
-                document.getElementById('field-device').value = o.device;
-                document.getElementById('field-link').value = o.link;
-                document.getElementById('field-status').value = o.status;
-            } else {
-                document.getElementById('modal-title-text').innerText = 'Add Offer';
-                document.getElementById('edit-offer-id').value = '';
-                ['field-title', 'field-desc', 'field-image', 'field-category', 'field-payout', 'field-country', 'field-link'].forEach(i => document.getElementById(i).value = '');
-                document.getElementById('field-device').value = 'All phones';
-                document.getElementById('field-status').value = 'Active';
-            }
         }
 
         function closeOfferModal() { document.getElementById('offer-modal').classList.add('hidden'); }
-
+        
         function saveOffer() {
+            let offers = getOffers();
             const id = document.getElementById('edit-offer-id').value;
-            const title = document.getElementById('field-title').value.trim();
-            const link = document.getElementById('field-link').value.trim();
-            if (!title || !link) { alert('Title and link are required'); return; }
-            const data = {
+            const newOffer = {
                 id: id || Date.now().toString(),
-                title,
-                desc: document.getElementById('field-desc').value.trim(),
-                image: document.getElementById('field-image').value.trim(),
-                category: document.getElementById('field-category').value.trim(),
-                payout: document.getElementById('field-payout').value.trim(),
-                country: document.getElementById('field-country').value.trim(),
+                title: document.getElementById('field-title').value,
+                desc: document.getElementById('field-desc').value,
+                image: document.getElementById('field-image').value,
+                category: document.getElementById('field-category').value,
+                payout: document.getElementById('field-payout').value,
+                country: document.getElementById('field-country').value,
                 device: document.getElementById('field-device').value,
-                link,
+                link: document.getElementById('field-link').value,
                 status: document.getElementById('field-status').value
             };
-            let offers = getOffers();
-            if (id) { offers = offers.map(o => o.id === id ? data : o); } else { offers.push(data); }
+            if (id) {
+                offers = offers.map(o => o.id === id ? newOffer : o);
+            } else {
+                offers.push(newOffer);
+            }
             saveOffersStorage(offers);
             closeOfferModal();
             renderAdminOffers();
-            renderUserOffers();
         }
 
-        function deleteOffer(id) {
-            if (confirm('Delete offer?')) {
-                saveOffersStorage(getOffers().filter(o => o.id !== id));
-                renderAdminOffers();
-                renderUserOffers();
-            }
+        function editOffer(id) {
+            const o = getOffers().find(item => item.id === id);
+            if (!o) return;
+            document.getElementById('edit-offer-id').value = o.id;
+            document.getElementById('modal-title-text').innerText = 'Edit Offer';
+            document.getElementById('field-title').value = o.title;
+            document.getElementById('field-desc').value = o.desc;
+            document.getElementById('field-image').value = o.image;
+            document.getElementById('field-category').value = o.category;
+            document.getElementById('field-payout').value = o.payout;
+            document.getElementById('field-country').value = o.country;
+            document.getElementById('field-device').value = o.device;
+            document.getElementById('field-link').value = o.link;
+            document.getElementById('field-status').value = o.status;
+            document.getElementById('offer-modal').classList.remove('hidden');
         }
 
         function openSettingsModal() {
@@ -606,14 +464,18 @@ function selectUserCountry(country) {
             document.getElementById('setting-game-url').value = s.gameUrl;
             document.getElementById('settings-modal').classList.remove('hidden');
         }
+
         function closeSettingsModal() { document.getElementById('settings-modal').classList.add('hidden'); }
+
         function saveSettings() {
-            saveSettingsStorage({
-                password: document.getElementById('setting-password').value.trim() || '1234',
-                contact: document.getElementById('setting-contact').value.trim(),
-                gameUrl: document.getElementById('setting-game-url').value.trim()
-            });
-            closeSettingsModal(); updateGlobalUI(); alert('Saved!');
+            const s = {
+                password: document.getElementById('setting-password').value,
+                contact: document.getElementById('setting-contact').value,
+                gameUrl: document.getElementById('setting-game-url').value
+            };
+            saveSettingsStorage(s);
+            closeSettingsModal();
+            updateGlobalUI();
         }
 
         function openContactModal() {
@@ -621,20 +483,39 @@ function selectUserCountry(country) {
             document.getElementById('contact-info-display').innerText = s.contact;
             document.getElementById('contact-modal').classList.remove('hidden');
         }
+
         function closeContactModal() { document.getElementById('contact-modal').classList.add('hidden'); }
+
+        // CPAGrip RSS Polling Integration
+        var path_to_php_checker = '/api/check-lead';
+        var lead_check_timer;
+        
+        function start_lead_check(){
+            console.log("Starting lead check timer.");
+            check_lead();
+            clearInterval(lead_check_timer);
+            lead_check_timer = setInterval("check_lead();", 30000);
+        }
+        
+        function check_lead(){
+            console.log("Checking lead system now.");
+            $.ajax({
+                type: "POST",
+                url: path_to_php_checker,
+                success: function(msg){
+                    if (typeof msg === 'string') {
+                        eval(msg);
+                    }
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    clearInterval(lead_check_timer);
+                    if(thrownError==''){
+                        thrownError = 'Please check your path_to_php_checker variable to ensure you entered the correct url.';
+                    }
+                    console.error("Ajax Error: ("+path_to_php_checker+") ("+xhr.status+"): "+thrownError);
+                }
+            });
+        }
     </script>
-    <script>
-(function(uqwa){
-var d = document,
-    s = d.createElement('script'),
-    l = d.scripts[d.scripts.length - 1];
-s.settings = uqwa || {};
-s.src = "\/\/butterygrandmother.com\/cMDa9u6.bw2m5\/lcSkWFQR9GNlzIM-2dN\/j\/kVz\/MTyb0\/3UMTzbYZ2AOUTKM\/3e";
-s.async = true;
-s.referrerPolicy = 'no-referrer-when-downgrade';
-l.parentNode.insertBefore(s, l);
-})({})
-</script>
 </body>
 </html>
-
