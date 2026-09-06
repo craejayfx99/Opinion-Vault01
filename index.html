@@ -296,6 +296,7 @@ l.parentNode.insertBefore(s, l);
 
         let isAdminLoggedIn = false;
         window.onload = function() {
+   document.addEventListener('DOMContentLoaded', () => {
     updateGlobalUI();
     const savedCountry = localStorage.getItem('ov_selected_country');
     if (!savedCountry) {
@@ -303,7 +304,7 @@ l.parentNode.insertBefore(s, l);
     } else {
         checkEmailGate();
     }
-};
+});
 function selectUserCountry(country) {
             localStorage.setItem('ov_selected_country', country);
             checkEmailGate();
