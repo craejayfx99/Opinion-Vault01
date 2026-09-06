@@ -28,6 +28,7 @@
         .btn:hover { background: var(--primary-hover); }
         .btn-outline { background: transparent; border: 1px solid var(--border); color: var(--text-main); }
         .btn-danger { background: var(--danger); }
+        .country-btn.active-country { background: var(--primary); border-color: var(--primary); color: white; }
         main { flex: 1; max-width: 1000px; width: 100%; margin: 1.5rem auto; padding: 0 1rem; }
         .container { background: var(--card-bg); border: 1px solid var(--border); border-radius: 0.5rem; padding: 1.5rem; margin-bottom: 1.5rem; }
         .form-group { margin-bottom: 1rem; }
@@ -47,6 +48,7 @@
         th, td { padding: 0.65rem; text-align: left; border-bottom: 1px solid var(--border); }
         th { background: #0f172a; color: var(--text-muted); }
         .toolbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem; flex-wrap: wrap; gap: 0.75rem; }
+        .country-pills { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 1rem; }
     </style>
 </head>
 <body>
@@ -74,26 +76,6 @@
     </header>
 
     <main>
-        <section id="view-country-selector" class="hidden p-6 max-w-md mx-auto text-center">
-            <div class="country-filter-section" style="margin-bottom: 24px;">
-                <h3 style="color: #ffffff; font-size: 1.25rem; font-weight: 600; margin-bottom: 4px;">Choose Your Country</h3>
-                <p style="color: #94a3b8; font-size: 0.9rem; margin-bottom: 14px;">Select your region to view available offers.</p>
-                <div class="country-pills" style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;">
-                    <button onclick="filterByCountry('All')" class="country-btn btn btn-outline">All</button>
-                    <button onclick="filterByCountry('United States')" class="country-btn btn btn-outline">🇺🇸 United States</button>
-                    <button onclick="filterByCountry('United Kingdom')" class="country-btn btn btn-outline">🇬🇧 United Kingdom</button>
-                    <button onclick="filterByCountry('Canada')" class="country-btn btn btn-outline">🇨🇦 Canada</button>
-                    <button onclick="filterByCountry('Australia')" class="country-btn btn btn-outline">🇦🇺 Australia</button>
-                    <button onclick="filterByCountry('Germany')" class="country-btn btn btn-outline">🇩🇪 Germany</button>
-                    <button onclick="filterByCountry('France')" class="country-btn btn btn-outline">🇫🇷 France</button>
-                    <button onclick="filterByCountry('India')" class="country-btn btn btn-outline">🇮🇳 India</button>
-                    <button onclick="filterByCountry('Nigeria')" class="country-btn btn btn-outline">🇳🇬 Nigeria</button>
-                    <button onclick="filterByCountry('South Africa')" class="country-btn btn btn-outline">🇿🇦 South Africa</button>
-                    <button onclick="selectUserCountry('Other')" class="country-btn btn btn-outline">🌍 Other Region</button>
-                </div>
-            </div>
-        </section>
-
         <section id="view-email-gate">
             <div class="container" style="max-width: 400px; margin: 3rem auto; text-align: center;">
                 <h2>Unlock Offers</h2>
@@ -107,15 +89,36 @@
         </section>
 
         <section id="view-user" class="hidden">
-            <div class="toolbar">
-                <div>
-                    <h2>Available Offers</h2>
-                    <p style="color: var(--text-muted); font-size: 0.85rem;">Complete tasks below.</p>
+            <div class="container">
+                <div class="toolbar" style="margin-bottom: 0.75rem;">
+                    <div>
+                        <h2>Available Offers</h2>
+                        <p style="color: var(--text-muted); font-size: 0.85rem;">Complete tasks below.</p>
+                    </div>
+                    <div>
+                        <input type="text" id="search-offers" placeholder="Search offers..." oninput="renderUserOffers()" style="padding: 0.5rem; width: 180px; font-size: 0.85rem;">
+                    </div>
                 </div>
-                <div>
-                    <input type="text" id="search-offers" placeholder="Search..." oninput="renderUserOffers()" style="padding: 0.4rem; width: 140px; font-size: 0.85rem;">
+
+                <!-- Country Filter Pills Always Available -->
+                <div class="country-filter-section">
+                    <label style="margin-bottom: 6px;">Filter by Region:</label>
+                    <div class="country-pills" id="country-pills-container">
+                        <button onclick="filterByCountry('All')" class="country-btn btn btn-outline" data-country="All">All</button>
+                        <button onclick="filterByCountry('United States')" class="country-btn btn btn-outline" data-country="United States">🇺🇸 US</button>
+                        <button onclick="filterByCountry('United Kingdom')" class="country-btn btn btn-outline" data-country="United Kingdom">🇬🇧 UK</button>
+                        <button onclick="filterByCountry('Canada')" class="country-btn btn btn-outline" data-country="Canada">🇨🇦 Canada</button>
+                        <button onclick="filterByCountry('Australia')" class="country-btn btn btn-outline" data-country="Australia">🇦🇺 Australia</button>
+                        <button onclick="filterByCountry('Germany')" class="country-btn btn btn-outline" data-country="Germany">🇩🇪 Germany</button>
+                        <button onclick="filterByCountry('France')" class="country-btn btn btn-outline" data-country="France">🇫🇷 France</button>
+                        <button onclick="filterByCountry('India')" class="country-btn btn btn-outline" data-country="India">🇮🇳 India</button>
+                        <button onclick="filterByCountry('Nigeria')" class="country-btn btn btn-outline" data-country="Nigeria">🇳🇬 Nigeria</button>
+                        <button onclick="filterByCountry('South Africa')" class="country-btn btn btn-outline" data-country="South Africa">🇿🇦 South Africa</button>
+                        <button onclick="filterByCountry('Other')" class="country-btn btn btn-outline" data-country="Other">🌍 Other</button>
+                    </div>
                 </div>
             </div>
+
             <div id="user-offers-container" class="offers-grid"></div>
         </section>
 
@@ -247,18 +250,8 @@
 
         document.addEventListener('DOMContentLoaded', () => {
             updateGlobalUI();
-            const savedCountry = localStorage.getItem('ov_selected_country');
-            if (!savedCountry) {
-                showView('view-country-selector');
-            } else {
-                checkEmailGate();
-            }
-        });
-
-        function selectUserCountry(country) {
-            localStorage.setItem('ov_selected_country', country);
             checkEmailGate();
-        }
+        });
 
         function filterByCountry(country) {
             if (country === 'All') {
@@ -266,12 +259,29 @@
             } else {
                 localStorage.setItem('ov_selected_country', country);
             }
+            updateActiveCountryPills();
             renderUserOffers();
         }
 
+        function updateActiveCountryPills() {
+            const currentCountry = localStorage.getItem('ov_selected_country') || 'All';
+            document.querySelectorAll('.country-btn').forEach(btn => {
+                if (btn.getAttribute('data-country') === currentCountry) {
+                    btn.classList.add('active-country');
+                } else {
+                    btn.classList.remove('active-country');
+                }
+            });
+        }
+
         function checkEmailGate() {
-            if (localStorage.getItem('ov_unlocked_email')) { showView('view-user'); renderUserOffers(); }
-            else { showView('view-email-gate'); }
+            if (localStorage.getItem('ov_unlocked_email')) { 
+                showView('view-user'); 
+                updateActiveCountryPills();
+                renderUserOffers(); 
+            } else { 
+                showView('view-email-gate'); 
+            }
         }
 
         function submitVisitorEmail() {
@@ -279,7 +289,9 @@
             if (!email || !email.includes('@')) { alert('Enter valid email'); return; }
             let emails = getEmails(); emails.push({ email, date: new Date().toLocaleDateString() }); saveEmailsStorage(emails);
             localStorage.setItem('ov_unlocked_email', email);
-            showView('view-user'); renderUserOffers();
+            showView('view-user'); 
+            updateActiveCountryPills();
+            renderUserOffers();
             start_lead_check();
         }
 
@@ -290,7 +302,7 @@
         }
 
         function showView(id) {
-            ['view-country-selector', 'view-email-gate', 'view-user', 'view-admin-login', 'view-admin-dashboard'].forEach(v => {
+            ['view-email-gate', 'view-user', 'view-admin-login', 'view-admin-dashboard'].forEach(v => {
                 const el = document.getElementById(v);
                 if (el) el.classList.add('hidden');
             });
@@ -346,7 +358,7 @@
             
             container.innerHTML = '';
             if (!offers.length) {
-                container.innerHTML = '<p style="color: #94a3b8; text-align: center; grid-column: 1 / -1; padding: 2rem;">No active offers for this region.</p>';
+                container.innerHTML = '<p style="color: #94a3b8; text-align: center; grid-column: 1 / -1; padding: 2rem;">No active offers match your search or region.</p>';
                 return;
             }
 
@@ -491,14 +503,12 @@
         var lead_check_timer;
         
         function start_lead_check(){
-            console.log("Starting lead check timer.");
             check_lead();
             clearInterval(lead_check_timer);
             lead_check_timer = setInterval("check_lead();", 30000);
         }
         
         function check_lead(){
-            console.log("Checking lead system now.");
             $.ajax({
                 type: "POST",
                 url: path_to_php_checker,
@@ -509,10 +519,6 @@
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
                     clearInterval(lead_check_timer);
-                    if(thrownError==''){
-                        thrownError = 'Please check your path_to_php_checker variable to ensure you entered the correct url.';
-                    }
-                    console.error("Ajax Error: ("+path_to_php_checker+") ("+xhr.status+"): "+thrownError);
                 }
             });
         }
