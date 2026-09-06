@@ -303,9 +303,10 @@ l.parentNode.insertBefore(s, l);
     }
 };
 function selectUserCountry(country) {
-    localStorage.setItem('ov_selected_country', country);
-    checkEmailGate();
-}
+            localStorage.setItem('ov_selected_country', country);
+            checkEmailGate();
+        }
+
         function checkEmailGate() {
             if (localStorage.getItem('ov_unlocked_email')) { showView('view-user'); renderUserOffers(); }
             else { showView('view-email-gate'); }
@@ -326,8 +327,12 @@ function selectUserCountry(country) {
         }
 
         function showView(id) {
-            ['view-email-gate', 'view-user', 'view-admin-login', 'view-admin-dashboard'].forEach(v => document.getElementById(v).classList.add('hidden'));
-            document.getElementById(id).classList.remove('hidden');
+            ['view-email-gate', 'view-user', 'view-admin-login', 'view-admin-dashboard'].forEach(v => {
+                const el = document.getElementById(v);
+                if (el) el.classList.add('hidden');
+            });
+            const target = document.getElementById(id);
+            if (target) target.classList.remove('hidden');
         }
 
         function showAdminLogin() {
@@ -351,15 +356,72 @@ function selectUserCountry(country) {
             document.getElementById('nav-logout-btn').classList.add('hidden');
             checkEmailGate();
         }
-function filterByCountry(country) {
-    if (country === 'All') {
-        localStorage.removeItem('ov_selected_country');
-    } else {
-        localStorage.setItem('ov_selected_country', country);
-    }
-    renderUserOffers();
-}
+
+        function filterByCountry(country) {
+            if (country === 'All') {
+                localStorage.removeItem('ov_selected_country');
+            } else {
+                localStorage.setItem('ov_selected_country', country);
+            }
+            renderUserOffers();
+        }
+
         function renderUserOffers() {
+            const container = document.getElementById('user-offers-container');
+            const searchInput = document.getElementById('search-offers');
+            const searchTerm = searchInput ? searchInput.value.toLowerCase().trim() : '';
+            const selectedCountry = localStorage.getItem('ov_selected_country');
+            
+            const mainPresets = ['united states', 'united kingdom', 'canada', 'australia', 'germany', 'france', 'india', 'brazil', 'nigeria', 'south africa'];
+
+            const offers = getOffers().filter(o => {
+                const offerCountry = o.country ? o.country.toLowerCase().trim() : '';
+                
+                let matchesCountry = true;
+                if (selectedCountry && selectedCountry !== 'All') {
+                    const target = selectedCountry.toLowerCase().trim();
+                    if (target === 'other') {
+                        matchesCountry = !mainPresets.includes(offerCountry);
+                    } else {
+                        matchesCountry = (offerCountry === target);
+                    }
+                }
+
+                const matchesSearch = !searchTerm || o.title.toLowerCase().includes(searchTerm) || o.category.toLowerCase().includes(searchTerm);
+                return matchesCountry && matchesSearch;
+            });
+            
+            container.innerHTML = '';
+            if (!offers.length) {
+                container.innerHTML = '<p style="color: #94a3b8; text-align: center; grid-column: 1 / -1; padding: 2rem;">No active offers for this region.</p>';
+                return;
+            }
+
+            offers.forEach(o => {
+                const card = document.createElement('div');
+                card.className = 'offer-card';
+                card.innerHTML = `
+                    <div>
+                        ${o.image ? `<img src="${o.image}" class="offer-image">` : `<div style="height:160px;background:#0f172a;display:flex;align-items:center;justify-content:center;color:var(--text-muted)">No Cover Image</div>`}
+                        <div class="offer-content">
+                            <div>
+                                <div class="offer-header">
+                                    <span class="offer-title">${o.title}</span>
+                                    <span class="offer-payout">${o.payout}</span>
+                                </div>
+                                <p style="font-size:0.85rem; color:var(--text-muted);">${o.desc}</p>
+                                <div class="offer-meta">
+                                    <span>Country: <strong style="color:white">${o.country}</strong></span>
+                                    <span>Device: <strong style="color:white">${o.device}</strong></span>
+                                    <span>Category: <strong style="color:white">${o.category}</strong></span>
+                                </div>
+                            </div>
+                            <a href="${o.link}" target="_blank" class="btn" style="text-align:center; margin-top:0.75rem;">Open offer</a>
+                        </div>
+                    </div>`;
+                container.appendChild(card);
+            });
+        }
             const container = document.getElementById('user-offers-container');
             const searchInput = document.getElementById('search-offers');
             const searchTerm = searchInput ? searchInput.value.toLowerCase().trim() : '';
