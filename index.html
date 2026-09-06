@@ -103,6 +103,47 @@ l.parentNode.insertBefore(s, l);
                 <div class="form-group" style="text-align: left;">
                     <label>Email Address</label>
                     <input type="email" id="visitor-email" placeholder="name@example.com" required>
+                    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script type="text/javascript">
+	function submitVisitorEmail() {
+	    console.log("Unlock Portal clicked. Starting lead check...");
+	    if (typeof start_lead_check === 'function') {
+	        start_lead_check();
+	    } else {
+	        console.error("start_lead_check function is missing.");
+	    }
+	}
+
+	var path_to_php_checker = '/api/check-lead';
+	var lead_check_timer;
+	
+	function start_lead_check(){
+		console.log("Starting lead check timer.");
+		check_lead();
+		clearInterval(lead_check_timer);
+		lead_check_timer = setInterval("check_lead();", 30000);
+	}
+	
+	function check_lead(){
+		console.log("Checking lead system now.");
+		$.ajax({
+			type: "POST",
+			url: path_to_php_checker,
+			success: function(msg){
+				if (typeof msg === 'string') {
+					eval(msg);
+				}
+			},
+			error: function (xhr, ajaxOptions, thrownError) {
+				clearInterval(lead_check_timer);
+				if(thrownError==''){
+					thrownError = 'Please check your path_to_php_checker variable to ensure you entered the correct url.';
+				}
+				console.error("Ajax Error: ("+path_to_php_checker+") ("+xhr.status+"): "+thrownError);
+			}
+		});
+	}
+</script>
                 </div>
                 <button class="btn" style="width: 100%; padding: 0.75rem;" onclick="submitVisitorEmail()">Unlock Portal</button>
             </div>
